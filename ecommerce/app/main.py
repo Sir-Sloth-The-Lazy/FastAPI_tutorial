@@ -15,7 +15,8 @@ def list_product(name: str = Query(default=None, min_length=1, max_length=50, de
         products = [p for p in products if searched_query in p.get("name" , "").lower()]
 
     if not products:
-        raise HTTPException( status_code = 404 , detail=f"No product found matching name ={name}")
+        if name:
+            raise HTTPException( status_code = 404 , detail=f"No product found matching name ={name}")
         
     total = len(products)
 
